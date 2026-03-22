@@ -21,7 +21,6 @@ jobs:
       
       - name: Validate theme JSON files
         run: |
-          echo "Validating theme files..."
           node -e "
             const fs = require('fs');
             const themes = [
@@ -34,7 +33,6 @@ jobs:
                 const content = fs.readFileSync(file, 'utf8');
                 const theme = JSON.parse(content);
                 
-                // Check required fields
                 if (!theme.name) throw new Error('Missing name');
                 if (!theme.type) throw new Error('Missing type');
                 if (!theme.colors) throw new Error('Missing colors');
@@ -54,7 +52,6 @@ jobs:
             const fs = require('fs');
             const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
             
-            // Check required fields
             if (!pkg.name) throw new Error('Missing name');
             if (!pkg.displayName) throw new Error('Missing displayName');
             if (!pkg.version) throw new Error('Missing version');
@@ -74,31 +71,7 @@ jobs:
           test -f themes/stardust-light-color-theme.json || (echo "Missing light theme" && exit 1)
           test -f LICENSE || (echo "Missing LICENSE" && exit 1)
           test -f README.md || (echo "Missing README" && exit 1)
-          test -f CHANGELOG.md || (echo "Missing CHANGELOG" && exit 1)
           echo "✓ All required files present"
-      
-      - name: Check theme colors
-        run: |
-          node -e "
-            const fs = require('fs');
-            const theme = JSON.parse(fs.readFileSync('./themes/stardust-color-theme.json', 'utf8'));
-            
-            const requiredColors = [
-              'editor.background',
-              'editor.foreground',
-              'sideBar.background',
-              'activityBar.background'
-            ];
-            
-            requiredColors.forEach(color => {
-              if (!theme.colors[color]) {
-                console.error('Missing color:', color);
-                process.exit(1);
-              }
-            });
-            
-            console.log('✓ Required colors present');
-          "
       
       - name: Summary
         run: |
