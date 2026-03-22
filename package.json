@@ -1,20 +1,25 @@
 {
   "name": "stardust-theme",
   "displayName": "Stardust Theme",
-  "description": "A dark VS Code theme inspired by the cosmos",
-  "version": "0.1.0",
+  "description": "A VS Code theme inspired by the cosmos - featuring both dark and light variants",
+  "version": "0.2.0",
   "publisher": "h1s97x",
   "engines": {
     "vscode": "^1.74.0"
   },
   "categories": ["Themes"],
-  "keywords": ["theme", "dark", "cosmos", "stardust", "blue", "purple"],
+  "keywords": ["theme", "dark", "light", "cosmos", "stardust", "blue", "purple"],
   "contributes": {
     "themes": [
       {
         "label": "Stardust",
         "uiTheme": "vs-dark",
         "path": "./themes/stardust-color-theme.json"
+      },
+      {
+        "label": "Stardust Light",
+        "uiTheme": "vs",
+        "path": "./themes/stardust-light-color-theme.json"
       }
     ]
   },
