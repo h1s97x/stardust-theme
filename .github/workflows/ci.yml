@@ -17,17 +17,19 @@ jobs:
         with:
           node-version: '20'
       
-      - name: Install dependencies
-        run: npm install -g jsonlint
-      
-      - name: Validate Theme JSON
-        run: jsonlint themes/stardust-color-theme.json
-      
-      - name: Validate Package JSON
-        run: jsonlint package.json
+      - name: Validate JSON files
+        run: |
+          # Check if JSON files are valid
+          node -e "JSON.parse(require('fs').readFileSync('./themes/stardust-color-theme.json', 'utf8')); console.log('Dark theme: OK')"
+          node -e "JSON.parse(require('fs').readFileSync('./themes/stardust-light-color-theme.json', 'utf8')); console.log('Light theme: OK')"
+          node -e "JSON.parse(require('fs').readFileSync('./package.json', 'utf8')); console.log('Package: OK')"
       
       - name: Check file structure
         run: |
-          test -f package.json && echo "package.json exists"
-          test -f themes/stardust-color-theme.json && echo "theme.json exists"
-          echo "All files validated!"
+          test -f package.json && echo "✓ package.json"
+          test -f themes/stardust-color-theme.json && echo "✓ Dark theme"
+          test -f themes/stardust-light-color-theme.json && echo "✓ Light theme"
+          test -f LICENSE && echo "✓ LICENSE"
+          test -f README.md && echo "✓ README"
+          test -f CHANGELOG.md && echo "✓ CHANGELOG"
+          echo "All files present!"
