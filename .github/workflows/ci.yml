@@ -17,12 +17,17 @@ jobs:
         with:
           node-version: '20'
       
-      - name: Validate JSON
-        run: |
-          node -e "JSON.parse(require('fs').readFileSync('./themes/stardust-color-theme.json'))"
-          echo "Theme JSON is valid!"
+      - name: Install dependencies
+        run: npm install -g jsonlint
       
-      - name: Check package.json
+      - name: Validate Theme JSON
+        run: jsonlint themes/stardust-color-theme.json
+      
+      - name: Validate Package JSON
+        run: jsonlint package.json
+      
+      - name: Check file structure
         run: |
-          node -e "JSON.parse(require('fs').readFileSync('./package.json'))"
-          echo "Package JSON is valid!"
+          test -f package.json && echo "package.json exists"
+          test -f themes/stardust-color-theme.json && echo "theme.json exists"
+          echo "All files validated!"
